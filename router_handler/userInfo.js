@@ -5,7 +5,6 @@ const bcrypt = require('bcryptjs')
 //用户初始化信息模块
 exports.getUserInfo = (req, res)=>{
     const dbSelect = 'select userName,nickeName,email,user_pic from ev_users where id=? '
-    console.log(req.auth.id, 'userid')
     db.query(dbSelect, req.auth.id,(err, results)=>{
         //执行sql语句失败
         if(err)return res.cc(err)
@@ -35,7 +34,6 @@ exports.postUserInfoRenew = (req, res)=>{
 }
 //重置密码处理函数
 exports.updatePassword = (req, res)=>{
-    console.log(req.auth.id, '111111')
     // 根据id查询用户信息
     const sql= 'select * from ev_users where id=?'
     //执行sql语句

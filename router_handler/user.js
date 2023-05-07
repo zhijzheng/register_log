@@ -19,7 +19,6 @@ exports.regUsr = (req, res)=>{
    }
    //定义数据库sql,查询数据库是否包含改数据
    const sqlStr = 'select * from ev_users where userName=?'
-   console.log(userInfo.userName, 'userName')
    db.query(sqlStr,userInfo.userName,(err, results)=>{
     // 执行myq语句失败
     if(err){
@@ -39,7 +38,6 @@ exports.regUsr = (req, res)=>{
     }
      //调用bcrypt用于密码加密
   userInfo.password = bycry.hashSync(userInfo.password,10)
-  console.log(userInfo.password, 'debugNode')
     //添加新用户
     const sqlAddStr= 'insert into ev_users set ?'
     //添加新用户
@@ -72,10 +70,8 @@ exports.regUsr = (req, res)=>{
 }
 //登录
 exports.login = (req, res)=>{
-    console.log('debug');
    //接收表单数据
    const userInfo= req.body
-   console.log(userInfo, 'debugUser')
    //定义插查询数据
    const sqlSelect = 'select * from ev_users where userName=?'
    db.query(sqlSelect,userInfo.userName,(err, results)=>{
@@ -85,7 +81,6 @@ exports.login = (req, res)=>{
 
    // TODO: 判断密码是否正确
     const compareResult= bycry.compareSync(userInfo.password, results[0].password)
-    console.log(userInfo.password, 'debugUserName');
    if(!compareResult) return res.cc('登录失败!')
    const user= {...results[0],  password:'', usr_pic:''}
    //对用户信息进行加密，生成Token字符串,并设置有效期
